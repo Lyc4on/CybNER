@@ -1,0 +1,61 @@
+﻿Raw Data,Links
+"Tired of obfuscating strings and recompiling to break signatures? Wish you could keep PE-sieve from ripping your malware out of memory? Interested in learning how to do all of this with your existing COTS or private toolsets?
+
+For years, reverse engineers and endpoint security software have used memory scanning to locate shellcode and malware implants in Windows memory. These tools rely on IOCs such as signatures and unbacked executable memory. This talk will dive into the various methods in which memory scanners search for these indicators and demonstrate a stable evasion technique for each method. A new position-independent reflective DLL loader, AceLdr, will be released alongside the presentation and features the demonstrated techniques to evade all of the previously described memory scanners. The presenter and their colleagues have used AceLdr on red team operations against mature security programs to avoid detection successfully.
+
+This talk will focus on the internals of PE-sieve, MalMemDetect, Moneta, Volatility malfind, and YARA to understand how they find malware in memory and how malware can be modified to fly under their radar consistently.",https://ezdhgsy2aw7zg54z6dqsutrduhl22moami5zv2zt6urr6vub7gs6wfad.onion/node/241824
+"The hard outer shell of cyber defenses often give way to a soft, gooey and easy-to-exploit centre, but all the lateral movement and escalation techniques in the world, isn’t going to be worth anything if initial access cannot be secured. For threat actors and Red Teamer’s alike, getting over that initial hurdle can be a long, arduous task with little hope of success and phishing in particular is often the bane of any aspiring attacker. Between EDRs, email scanner solutions, payload fingerprinting… what do you do?",https://ezdhgsy2aw7zg54z6dqsutrduhl22moami5zv2zt6urr6vub7gs6wfad.onion/node/241804
+"Interestingly, I had him checked out and i get it! He is a total package, you interested in the cold war spying ? the pandemic lock down few years helped me with closure in my affair as we had to adopt new living methods…argh never mind, a mystery parcel I found...I’d recommend with such awesome Hack Oracle Application Server, that can recover password to email accounts, Facebook Hack, Phone Hacks, want to monitor your partner. You need to give this dude more encouragement !! services are not just confined to Website Takeover, Social Media Hacks, Database Hacks, Email Hacks, Phone and Gadget Hacks, change of grades, Location Tracking (Stealth Spying) or any other accounts that requires activation VERIFICATION code but other complex tailored services not listed in this message with respect for such low prices.cybilltritech AT protonmail DOT comTelling him greymatters sent you his info.",http://fahue6hb7odzns36vfoi2dqfvqvjq4btt7vo52a67jivmyz6a6h3vzqd.onion/topic/3006
+"What is this ?
+It's software(malware) that monitors victims clipboard for crypto adresses and replaces with yours.
+
+And ?
+When victim is infected with this malware. When he/she wants to send crypto to somebody, he copies crypto address, and paste this into wallet and hit send.
+In the background malware is replacing copied crypto address with yours. In that case you receive the crypto to your wallet.
+
+More about software:
+FUD (Antivirus wont detect)
+Supports any crypto addreses.
+
+Price 30$.
+
+P.S Don't ask me how to spread this software. There is many tutorials online about ""spreading"". And i'm not responsible for your blackhat actions ;)
+Peace ;)",http://fahue6hb7odzns36vfoi2dqfvqvjq4btt7vo52a67jivmyz6a6h3vzqd.onion/topic/2654
+"Cisco ASA and ASA-X are widely deployed firewalls that are relied upon to protect internal networks from the dangers of the outside world. This key piece of network infrastructure is an obvious point of attack, and a known target for exploitation and implantation by APT such as the Equation Group. Yet it’s been a number of years since a new vulnerability has been published that can provide privileged access to the ASA or the protected internal network. But all good things must come to an end.
+
+In this talk, new vulnerabilities affecting the Cisco ASA will be presented. We’ll exploit the firewall, the system’s administrators, and the ASA-X FirePOWER module. The result of which should call into question the firewall’s trustworthiness.
+
+The talk will focus on the practical exploitation of the ASA using these new vulnerabilities. To that end, new tooling and Metasploit modules will be presented. For IT protectors, mitigation and potential indicators of compromise will also be explored.",https://ezdhgsy2aw7zg54z6dqsutrduhl22moami5zv2zt6urr6vub7gs6wfad.onion/node/241939
+"These days, Programmable Logic Controllers (PLC) in an industrial network are a critical attack target, with more exploits being identified every day. But what if the PLC wasn’t the prey, but the predator? This presentation demonstrates a novel TTP called the ""Evil PLC Attack"", where a PLC is weaponized in a way that when an engineer is trying to configure or troubleshoot it, the engineer’s machine gets compromised. 
+
+ We will describe how engineers diagnose PLC issues, write code, and transfer bytecode to PLCs for execution with industrial processes in any number of critical sectors, including electric, water and wastewater, heavy industry, and automotive manufacturing. Then we will describe how we conceptualized, developed, and implemented different techniques to weaponize a PLC in order to achieve code execution on an engineer’s machine.
+
+The research resulted in working PoCs against ICS market leaders which fixed all the reported vulnerabilities and remediated the attack vector. Such vendors include Rockwell Automation, Schneider Electric, GE, B&R, Xinje, OVARRO and more.",https://ezdhgsy2aw7zg54z6dqsutrduhl22moami5zv2zt6urr6vub7gs6wfad.onion/node/241822
+"Windows 11 ships with a nifty feature called Power Automate, which lets users automate mundane processes. In a nutshell, Users can build custom processes and hand them to Microsoft, which in turn ensures they are distributed to all user machines or Office cloud, executed successfully and reports back to the cloud. You can probably already see where this is going..
+
+In this presentation, we will show how Power Automate can be repurposed to power malware operations. We will demonstrate the full cycle of distributing payloads, bypassing perimeter controls, executing them on victim machines and exfiltrating data. All while using nothing but Windows baked-in and signed executables, and Office cloud services.
+
+We will then take you behind the scenes and explore how this service works, what attack surface it exposes on the machine and in the cloud, and how it is enabled by-default and can be used without explicit user consent. We will also point out a few promising future research directions for the community to pursue.
+Finally, we will share an open-source command line tool to easily accomplish all of the above, so you will be able to add it into your Red Team arsenal and try out your own ideas.",https://ezdhgsy2aw7zg54z6dqsutrduhl22moami5zv2zt6urr6vub7gs6wfad.onion/node/241932
+"The Russia-Ukraine war has seen a lot of computer hacking, on both sides, by nations, haxor collectives, and random citizens, to steal, deny, alter, destroy, and amplify information. Satellite comms have gone down. Railway traffic has been stymied. Doxing is a weapon. Fake personas and false flags are expected. Every major platform has had issues with confidentiality, integrity, and availability. Hacked social media and TV have been a hall of mirrors and PSYOP. Russian comms are unreliable, so Ukrainian nets have become honeypots. 
+
+Hackers have been shot in the kneecaps. Talking heads have called for a RUNET shutdown. The Ukrainian government has appealed for hacker volunteers – just send your expertise, experience, and a reference. The Great Powers are hacking from afar, while defending their own critical infrastructure, including nuclear command-and-control. Ukraine has many hacker allies, while Russian hackers are fleeing their country in record numbers. Some lessons so far: connectivity is stronger than we thought, info ops are stealing the day, drones are the future, and it is always time for the next hack.
+",https://ezdhgsy2aw7zg54z6dqsutrduhl22moami5zv2zt6urr6vub7gs6wfad.onion/node/241831
+"Satellite designs are myriad as stars in the sky, but one common denominator across all modern missions is their dependency on long-radio radio links. In this briefing, we will turn a hacker’s eye towards the signals that are the lifeblood of space missions. We’ll learn how both state and non-state actors can, and have, executed physical-layer attacks on satellite communications systems and what their motivations have been for causing such disruption.
+
+Building on this foundation, we’ll present modern evolutions of these attack strategies which can threaten next-generation space missions. From jamming, to spoofing, to signal hijacking, we’ll see how radio links represent a key attack surface for space platforms and how technological developments make these attacks ever more accessible and affordable. We’ll simulate strategies attackers may use to cause disruption in key space communications links and even model attacks which may undermine critical safety controls involved in rocket launches.
+
+The presentation will conclude with a discussion of strategies which can defend against many of these attacks.
+
+While this talk includes technical components, it is intended to be accessible to all audiences and does not assume any prior background in radio communications, astrodynamics, or aerospace engineering. The hope is to provide a launchpad for researchers across the security community to contribute to protecting critical infrastructure in space and beyond.",https://ezdhgsy2aw7zg54z6dqsutrduhl22moami5zv2zt6urr6vub7gs6wfad.onion/node/242005
+"Malware continues to advance in sophistication. Well-engineered malware can obfuscate itself from the user and the OS. Volatile memory is the unique structure malware cannot evade. I have engineered a new construct for memory analysis and a new open-source tool that automates memory analysis, correlation, and user-interaction to increase investigation accuracy, reduce analysis time and workload, and better detect malware presence from memory.
+
+ This workshop introduces a new visualization construct that creates the ability to interact with memory analysis artifacts. We will cover how to conducted advanced memory analysis utilizing this brand new tool that will greatly enhance the analysis process. Additionally, we will learn how to use new Data XREF and System Manifest features in this workshop. Data XREF provides an index and memory context detailing how your search data is coupled with processes, modules, and events captured in memory. The System Manifest distills the analysis data to create a new memory analysis snapshot and precise identification of malicious artifacts detectable from malware execution especially useful for exploit dev and malware analysis! This talk is perfect if you have conducted memory analysis before and understand the pain it is to conduct this type of analysis by hand.
+
+ In this workshop, we will work with a new revolutionary tool to automate, correlate, and enrich memory analysis saving you hours of analysis time. This work shop exposes participants to capture-the-flag memory analysis challenges utilizing the new Xavier Memory Analysis Framework and concludes with a culminating capstone exercise at the end. Participants will walk away with advanced memory analysis capabilities including how to recognize and handle various forms of advance code injection and rootkit hooking techniques from computer memory.",https://ezdhgsy2aw7zg54z6dqsutrduhl22moami5zv2zt6urr6vub7gs6wfad.onion/node/241862
+,
+,
+,
+,
+,
+,
