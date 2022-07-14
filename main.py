@@ -3,12 +3,6 @@ import re
 import pandas as pd
 import json
 import spacy
-from spacy import displacy
-from spacy.util import minibatch, compounding
-import random
-import string
-import pathlib
-
 
 
 # ================ FUNCTION SECTION ================ #
@@ -200,6 +194,7 @@ def evaluationCleanup(predictionPath):
 
 
 def POSformat(evalpath):
+    """To add POS tags onto datasets."""
     print("\n**************** Adding POS Tags ****************")
     # Load a pretrained spaCy model
     nlp = spacy.load('en_core_web_sm')
@@ -308,13 +303,12 @@ configPath = "config.json"
 evalResultPath = "dataOutput/predictions/evaluation.conll"
 predictionPath = outputPath
 
-
 # ********** Main Functions **********
-#filecheck(trainPath)
-#csvToConll(csvPath, formatPath)
-#train(1, modelPath, configPath)
-#predict(1, modelPath, outputPath)
-#evaluationCleanup(predictionPath)
+filecheck(trainPath)
+csvToConll(csvPath, formatPath)
+train(1, modelPath, configPath)
+predict(1, modelPath, outputPath)
+evaluationCleanup(predictionPath)
 POSformat(evalResultPath)
 
 # ================ END SECTION ================ #
