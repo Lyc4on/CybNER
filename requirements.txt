@@ -1,11 +1,20 @@
 blis==0.7.8
+Brotli==1.0.9
 catalogue==2.0.7
 certifi==2022.6.15
 charset-normalizer==2.0.12
 click==8.1.3
 cymem==2.0.6
+dash==2.6.0
+dash-core-components==2.0.0
+dash-cytoscape==0.3.0
+dash-html-components==2.0.0
+dash-table==5.0.0
 en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.3.0/en_core_web_sm-3.3.0-py3-none-any.whl
+Flask==2.1.3
+Flask-Compress==1.12
 idna==3.3
+itsdangerous==2.1.2
 Jinja2==3.1.2
 langcodes==3.3.0
 MarkupSafe==2.1.1
@@ -13,6 +22,7 @@ murmurhash==1.0.7
 numpy==1.23.0
 packaging==21.3
 pathy==0.6.1
+plotly==5.9.0
 preshed==3.0.6
 pydantic==1.8.2
 pyparsing==3.0.9
@@ -22,11 +32,11 @@ spacy==3.3.1
 spacy-legacy==3.0.9
 spacy-loggers==1.0.2
 srsly==2.4.3
+tenacity==8.0.1
 thinc==8.0.17
 tqdm==4.64.0
 typer==0.4.1
 typing_extensions==4.2.0
 urllib3==1.26.9
 wasabi==0.9.1
-chached-path
-allennlp-models[all
+Werkzeug==2.1.2

@@ -2,7 +2,7 @@ import dash
 import dash_cytoscape as cyto
 from dash import html
 
-f1 = open('data/test.txt','r')
+f1 = open('data/graph_dataset.txt','r')
 id_list = ['raw text']
 label_list = ['raw text']
 ner_tag_list = ['-']
