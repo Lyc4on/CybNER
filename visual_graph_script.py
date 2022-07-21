@@ -2,7 +2,7 @@ import dash
 import dash_cytoscape as cyto
 from dash import html
 
-f1 = open('data/valid.conll','r')
+f1 = open('data/test.txt','r')
 id_list = ['raw text']
 label_list = ['raw text']
 ner_tag_list = ['-']
@@ -11,7 +11,7 @@ str_list = []
 for line in f1:
     if line != "\n":
         if line.split()[3] != "O":
-            if line.split()[3].startswith("B-"):
+            if line.split()[3].startswith("B-") or line.split()[3].startswith("U-"):
                 if str_list: 
                     if str_list[-1] not in label_list: label_list.append(str_list[-1])
                     else:
@@ -20,7 +20,7 @@ for line in f1:
                 str_list.append(line.split()[0])
                 id_list.append(str(str_list.index(line.split()[0])))
                 ner_tag_list.append(line.split()[3][2:])
-            elif line.split()[3].startswith("I-"):
+            elif line.split()[3].startswith("I-") or line.split()[3].startswith("L-"):
                 str_list[-1] += " "+line.split()[0]
              
 label_list.append(str_list[-1])
