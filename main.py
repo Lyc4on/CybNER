@@ -3,7 +3,9 @@ import re
 import pandas as pd
 import json
 import spacy
-
+import dash
+import dash_cytoscape as cyto
+from dash import html
 
 # ================ FUNCTION SECTION ================ #
 
@@ -288,6 +290,128 @@ def POSformat(evalpath):
     print("\n**************** Adding POS Tags Completed ****************")
 
 
+def demoChart(mode, evalpath):
+    """ Function used to display the plot chart used for presentation
+    Modes:
+    1 - evaluation output path
+    2 - Demo Chart
+    """
+
+    if mode == 1:
+        file = evalpath
+    elif mode == 2:
+        file = "data/graph_dataset.txt"
+    else:
+        print("Select a mode")
+        exit(0)
+
+    try:
+        print("\n**************** Commencing Chart Generation ****************")
+        f1 = open(file, 'r')
+        id_list = ['raw text']
+        label_list = ['raw text']
+        ner_tag_list = ['-']
+        next(f1)
+        str_list = []
+        for line in f1:
+            if line != "\n":
+                if line.split()[3] != "O":
+                    if line.split()[3].startswith("B-") or line.split()[3].startswith("U-"):
+                        if str_list:
+                            if str_list[-1] not in label_list:
+                                label_list.append(str_list[-1])
+                            else:
+                                ner_tag_list.pop()
+                                id_list.pop()
+                        str_list.append(line.split()[0])
+                        id_list.append(str(str_list.index(line.split()[0])))
+                        ner_tag_list.append(line.split()[3][2:])
+                    elif line.split()[3].startswith("I-") or line.split()[3].startswith("L-"):
+                        str_list[-1] += " " + line.split()[0]
+
+        label_list.append(str_list[-1])
+
+        nodes = [
+            {'data': {'id': id_no, 'label': label, "NER-tag": ner_tag}}
+            for id_no, label, ner_tag in zip(id_list, label_list, ner_tag_list)
+        ]
+
+        edges = [
+            {'data': {'source': 'raw text', 'target': target, "NER-tag": ner_tag}}
+            for target, ner_tag in zip(id_list[1:], ner_tag_list[1:])
+        ]
+
+        app = dash.Dash(__name__)
+
+        app.layout = html.Div([
+            cyto.Cytoscape(
+                id='cytoscape-two-nodes',
+                layout={'name': 'concentric'},
+                style={'width': '100%', 'height': '100vh'},
+                elements=nodes + edges,
+                stylesheet=[
+                    # Class selectors
+                    {
+                        'selector': 'node',
+                        'style': {'label': 'data(label)', 'background-color': 'white'}
+                    },
+                    {
+                        'selector': '[ NER-tag = "PER" ]',
+                        'style': {'background-color': 'blue', 'line-color': 'blue'}
+                    },
+                    {
+                        'selector': '[ NER-tag = "ORG" ]',
+                        'style': {'background-color': 'yellow', 'line-color': 'yellow'}
+                    },
+                    {
+                        'selector': '[ NER-tag = "LOC" ]',
+                        'style': {'background-color': 'green', 'line-color': 'green'}
+                    },
+                    {
+                        'selector': '[ NER-tag = "EXPLOITS" ]',
+                        'style': {'background-color': 'red', 'line-color': 'red'}
+                    },
+                    {
+                        'selector': '[ NER-tag = "MALWARE" ]',
+                        'style': {'background-color': 'purple', 'line-color': 'purple'}
+                    },
+                    {
+                        'selector': '[ NER-tag = "VENDOR" ]',
+                        'style': {'background-color': 'orange', 'line-color': 'orange'}
+                    },
+                    {
+                        'selector': '[ NER-tag = "DEVICES" ]',
+                        'style': {'background-color': 'black', 'line-color': 'black'}
+                    },
+                    {
+                        'selector': '[ NER-tag = "NETWORK" ]',
+                        'style': {'background-color': 'pink', 'line-color': 'orange'}
+                    },
+                    {
+                        'selector': '[ NER-tag = "COMMANDS" ]',
+                        'style': {'background-color': 'grey', 'line-color': 'grey'}
+                    },
+                    {
+                        'selector': '[ NER-tag = "APT" ]',
+                        'style': {'background-color': 'brown', 'line-color': 'brown'}
+                    },
+                    {
+                        'selector': '[ NER-tag = "CYBERSEC" ]',
+                        'style': {'background-color': 'aqua', 'line-color': 'aqua'}
+                    },
+
+                ]
+            )
+        ])
+
+        app.run_server(debug=True)
+        print("\n**************** Chart Generation Complete ****************")
+    except:
+        print("Unable to display chart. Something went wrong")
+        print("\n**************** Chart Generation Stopped ****************")
+        exit(0)
+
+
 # ================ END SECTION ================ #
 
 # ================ RUNNING SECTION ================ #
@@ -299,16 +423,18 @@ csvPath = "data/texts/main_data.csv"
 formatPath = "data/texts"
 outputPath = "dataOutput/predictions/prediction"
 modelPath = "modelOutput/model"
-configPath = "config.json"
-evalResultPath = "dataOutput/predictions/evaluation.conll"
+configPath = "ner.json"
+evalResultPath = "dataOutput/predictions/evaluation.conll-POS"
 predictionPath = outputPath
 
 # ********** Main Functions **********
-filecheck(trainPath)
-csvToConll(csvPath, formatPath)
-train(1, modelPath, configPath)
-predict(1, modelPath, outputPath)
-evaluationCleanup(predictionPath)
-POSformat(evalResultPath)
+# filecheck(evalResultPath)
+# csvToConll(csvPath, formatPath)
+# train(1, modelPath, configPath)
+# predict(1, modelPath, outputPath)
+# evaluationCleanup(predictionPath)
+# POSformat(evalResultPath)
+demoChart(2, evalResultPath)
+
 
 # ================ END SECTION ================ #
