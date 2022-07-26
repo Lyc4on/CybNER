@@ -42,3 +42,4 @@ wasabi==0.9.1
 Werkzeug==2.1.2
 allennlp
 cached-path
+pandas
