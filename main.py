@@ -81,8 +81,8 @@ def predict(mode, modelpath, outputpath):
         print("\n**************** Prediction Unsuccessful ****************")
 
 
-def csvToConll(csvpath, formattedpath):
-    """To covert raw data in CSV format to sentences as input for prediction"""
+def csvToJSON(csvpath, formattedpath):
+    """To covert raw data in CSV format to JSON sentences as input for prediction"""
     print("\n**************** Commencing Formatting ****************")
     # Converting CSV to formatted data
     sentence = ""
@@ -105,9 +105,9 @@ def csvToConll(csvpath, formattedpath):
     print("\n**************** Formatting Complete****************")
 
 
-def wordCleanup(evalpath):
+def wordCleanup(resultPath):
     """To compile the words from the output"""
-    f = open(evalpath, "r")
+    f = open(resultPath, "r")
     text = f.read()
     regexp = re.compile("words(.*)$")
     newText = regexp.search(text).group(1)
@@ -115,14 +115,14 @@ def wordCleanup(evalpath):
     string_without_brackets = re.sub(r"[\[]", '', newClean)
     removed_cursive_brackets = string_without_brackets.replace('}', '')
     outputText = removed_cursive_brackets.replace(' ', '\n')
-    words = open(os.path.dirname(evalpath) + "/words.txt", "w")
+    words = open(os.path.dirname(resultPath) + "/words.txt", "w")
     words.write(outputText[1:])
     words.close()
 
 
-def tagCleanup(evalpath):
+def tagCleanup(resultPath):
     """To compile the tags from the output"""
-    f = open(evalpath, "r")
+    f = open(resultPath, "r")
     text = f.read()
     regexp = re.compile("tags(.*)$")
     newText = regexp.search(text).group(1)
@@ -130,11 +130,11 @@ def tagCleanup(evalpath):
     newClean = re.sub('[:",]', '', clean)
     string_without_front_brackets = re.sub(r"[\[\]]", '', newClean)
     outputText = string_without_front_brackets.replace(' ', '\n')
-    tagsFile = open(os.path.dirname(evalpath) + "/tags.txt", "w")
+    tagsFile = open(os.path.dirname(resultPath) + "/tags.txt", "w")
     tagsFile.write(outputText[1:])
     tagsFile.close()
     newf = "-X- I-O "
-    filepath = os.path.dirname(evalpath) + "/tags.txt"
+    filepath = os.path.dirname(resultPath) + "/tags.txt"
     with open(filepath) as fp:
         lines = fp.read().splitlines()
     with open(filepath, "w") as fp:
@@ -142,9 +142,9 @@ def tagCleanup(evalpath):
             print(newf + line, file=fp)
 
 
-def whitespaceTaggingRemoval(evalpath):
+def whitespaceTaggingRemoval(resultPath):
     """To remove inaccurate predictions of whitespaces"""
-    with open(os.path.dirname(evalpath) + '/evaluation.conll', 'r') as file:
+    with open(os.path.dirname(resultPath) + '/evaluation.conll', 'r') as file:
         filedata = file.read()
 
     # Remove all whitespace: Data clean up manually
@@ -162,13 +162,13 @@ def whitespaceTaggingRemoval(evalpath):
     filedata = filedata.replace('\n -X- I-O U-APT', '\n')
     filedata = filedata.replace('\n -X- I-O U-CYBERSEC', '\n')
 
-    with open(os.path.dirname(evalpath) + '/evaluation.conll', 'w') as file:
+    with open(os.path.dirname(resultPath) + '/evaluation.conll', 'w') as file:
         file.write(filedata)
 
 
-def evaluationCleanup(predictionPath):
+def predictionCleanup(predictionPath):
     """To Generate the result of the prediction in .conll format"""
-    print("\n**************** Evaluation Generation Started ****************")
+    print("\n**************** Prediction Result Generation Started ****************")
     wordCleanup(predictionPath)
     tagCleanup(predictionPath)
     # Opening up the created text Files
@@ -192,10 +192,10 @@ def evaluationCleanup(predictionPath):
     tagList.to_csv(os.path.dirname(predictionPath) + '/evaluation.conll', header=None, index=None, sep=' ', mode='w')
     whitespaceTaggingRemoval(predictionPath)
     print("\nFile saved in  \'" + os.path.dirname(predictionPath) + '/evaluation.conll\'')
-    print("\n**************** Evaluation Generated ****************")
+    print("\n**************** Prediction Result Generated ****************")
 
 
-def POSformat(evalpath):
+def POSformat(resultPath):
     """To add POS tags onto datasets."""
     print("\n**************** Adding POS Tags ****************")
     # Load a pretrained spaCy model
@@ -203,7 +203,7 @@ def POSformat(evalpath):
 
     str_list = []
     string1 = ""
-    f3 = open(evalpath, 'r')
+    f3 = open(resultPath, 'r')
     next(f3)
     for line in f3:
         word = line.strip("\n")
@@ -217,8 +217,8 @@ def POSformat(evalpath):
     # append last string to list
     str_list.append(string1)
 
-    f1 = open(evalpath, 'r')
-    f2 = open(evalpath + "-POS", 'w')
+    f1 = open(resultPath, 'r')
+    f2 = open(resultPath + "-POS", 'w')
 
     count = 0
     temp_text = "x"
@@ -286,11 +286,11 @@ def POSformat(evalpath):
                     doc = nlp(mod_line[0])
                     for token in doc:
                         f2.write(line.replace("-X-", token.tag_))
-    print("\nNew dataset can be found in " + evalpath + "-POS")
+    print("\nNew dataset can be found in " + resultPath + "-POS")
     print("\n**************** Adding POS Tags Completed ****************")
 
 
-def demoChart(mode, evalpath):
+def graphicalDisplay(mode, resultPath):
     """ Function used to display the plot chart used for presentation
     Modes:
     1 - evaluation output path
@@ -298,7 +298,7 @@ def demoChart(mode, evalpath):
     """
 
     if mode == 1:
-        file = evalpath
+        file = resultPath
     elif mode == 2:
         file = "data/graph_dataset.txt"
     else:
@@ -385,7 +385,7 @@ def demoChart(mode, evalpath):
                     },
                     {
                         'selector': '[ NER-tag = "NETWORK" ]',
-                        'style': {'background-color': 'pink', 'line-color': 'orange'}
+                        'style': {'background-color': 'pink', 'line-color': 'pink'}
                     },
                     {
                         'selector': '[ NER-tag = "COMMANDS" ]',
@@ -423,18 +423,18 @@ csvPath = "data/texts/main_data.csv"
 formatPath = "data/texts"
 outputPath = "dataOutput/predictions/prediction"
 modelPath = "modelOutput/model"
-configPath = "ner.json"
-evalResultPath = "dataOutput/predictions/evaluation.conll-POS"
+configPath = "config.json"
+resultPath = "dataOutput/predictions/evaluation.conll-POS"
 predictionPath = outputPath
 
 # ********** Main Functions **********
-# filecheck(evalResultPath)
-# csvToConll(csvPath, formatPath)
-# train(1, modelPath, configPath)
-# predict(1, modelPath, outputPath)
-# evaluationCleanup(predictionPath)
-# POSformat(evalResultPath)
-demoChart(2, evalResultPath)
+filecheck(resultPath)
+csvToJSON(csvPath, formatPath)
+train(1, modelPath, configPath)
+predict(1, modelPath, outputPath)
+predictionCleanup(predictionPath)
+POSformat(resultPath)
+graphicalDisplay(2, resultPath)
 
 
 # ================ END SECTION ================ #
