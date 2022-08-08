@@ -11,6 +11,7 @@ A AllenNLP Model trained for Named Entity Recognition in the Cybersecurity Domai
 ```bash
 git clone https://github.com/Lyc4on/Cybersecurity-NER.git
 pip install -r requirements.txt # Recommended to use python virtual environment
+```
 
 ## System Architecture
 ![](src/System_Architecture.png)
