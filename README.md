@@ -14,7 +14,7 @@ pip install -r requirements.txt # Recommended to use python virtual environment
 ```
 
 ## System Architecture
-![](src/System_Architecture.png)
+![](images/Project_Architecture.png)
 
 
 
