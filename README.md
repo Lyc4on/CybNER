@@ -14,6 +14,7 @@ conda create -n conda_env python=3.9
 conda activate conda_env
 git clone https://github.com/Lyc4on/Cybersecurity-NER.git
 pip install -r requirements.txt
+conda install -c anaconda cudatoolkit
 ```
 
 ## System Architecture
