@@ -1,6 +1,3 @@
-# Cybersecurity-NER
-A AllenNLP Model trained for Named Entity Recognition in the Cybersecurity Domain with added features of automated annotation and visualization graph.
-
 # Cybersecurity Named Entity Recognition
 ## Introduction
 A AllenNLP Model trained for Named Entity Recognition in the Cybersecurity Domain with added features of automated annotation and visualization graph.
