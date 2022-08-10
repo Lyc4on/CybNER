@@ -25,7 +25,6 @@ The diagram below depicts the overall architecture of the system, beginning from
 
 
 ## Usage
-Trained AllenNLP model can be found in the release section at https://github.com/Lyc4on/Cybersecurity-NER/releases/download/v1.0.0/AllenNLP_model.tar.gz
  ```bash
 python main.py -p <csv file>
 ```
@@ -37,4 +36,7 @@ python main.py -p <csv file>
 ```
 
 ![](images/Knowledge_Graph.png)
+
+## Releases
+The release section consists of the trained AllenNLP model at https://github.com/Lyc4on/Cybersecurity-NER/releases/download/v1.0.0/AllenNLP_model.tar.gz
 
