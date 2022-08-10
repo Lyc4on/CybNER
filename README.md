@@ -20,11 +20,11 @@ conda install -c anaconda cudatoolkit
 
 ## System Architecture
 The diagram below depicts the overall architecture of the system, beginning from the collection of cybersecurity related raw text to the training and usage of the AllenNLP model. Take note that in this diagram, The Cyber Threat intelligence Hunter (CTIH), a application from Singapore Institute of Technology (SIT), which utlises the model for prediction would not be featured in the repository.
-
 ![](images/Project_Architecture.png)
 
 
 ## Usage
+Trained AllenNLP model can be found in the release section at https://github.com/Lyc4on/Cybersecurity-NER/releases/download/v1.0.0/AllenNLP_model.tar.gz
  ```bash
 python main.py -p <csv file>
 ```
