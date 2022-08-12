@@ -4,33 +4,24 @@ import dash_cytoscape as cyto
 from dash import html
 
 log = logging.getLogger("CybNER")
-    # filecheck(resultPath)
-    # csvToJSON(csvPath, formatPath)
-    # train(1, modelPath, configPath)
-    # predict(1, modelPath, outputPath)
-    # predictionCleanup(predictionPath)
-    # POSformat(resultPath)
-    # graphicalDisplay(2, resultPath)
 
 # ********** File Paths **********
-trainPath = "data/train/train.conll"
-validPath = "data/valid/valid.conll"
-csvPath = "data/texts/main_data.csv"
-formatPath = "data/texts"
-outputPath = "dataOutput/predictions/prediction"
-modelPath = "model/AllenNLP_model.tar.gz"
-configPath = "config.json"
-resultPath = "dataOutput/predictions/evaluation.conll-POS"
-predictionPath = outputPath
+conversionOutputPath = "data/texts"
+outputPath = "dataOutput/predictions/"
+modelPath = "modelOutput/model"
 
-parser = argparse.ArgumentParser(description='Usage of CybNER for cybersecurity-NER')
-parser.add_argument("-f", "--filepath", default=None, type=str, help="input the path of the dataset file")
+parser = argparse.ArgumentParser(description='CybNER - perform cybersecurity named entity recognition')
+parser.add_argument("-f", "--filepath", default=None, type=str, help="input the path of the file/dataset needed by visual graph, conversion, dataset_check or predict function")
+parser.add_argument("-t", "--train", default=None, type=int, help="[TRAIN] 1 - train with force overwrite 2 - train with recovery 3 - help page on train cmd | retrain the model with customised config or with the same dataset")
+parser.add_argument("-c", "--config", default=None, type=str, help="input configuration file for training")
 parser.add_argument("-p", "--predict", default=None, type=int, help="[PREDICTION] 1 - predict from CSV file, 2 - predict from TXT file | perform prediction on supplied raw text")
-parser.add_argument("-vg", "--visual_graph", default=None, type=str, help="input CoNLL dataset file path | generate knowledge graph based on CoNLL-2003 format")
+parser.add_argument("-vg", "--visual_graph", action='store_true', help="generate a interactive knowledge graph based on CoNLL-2003 format")
+parser.add_argument("-co", "--conversion", action='store_true', help="convert CSV file to JSON format for prediction")
+parser.add_argument("-dc", "--dataset_check", action='store_true', help="check for encoding errors in datasets")
 args = parser.parse_args()
 
 # ================ FUNCTION SECTION ================ #
-def filecheck(path):
+def dataset_check(path):
     """ To check and pinpoint for any encoding errors in the dataset """
     print("\n**************** Filecheck Started ****************")
     file1 = open(path, 'r+')
@@ -78,7 +69,7 @@ def train(mode, modelpath, config):
 
 def predict(mode, filepath, modelpath, outputpath):
     """ Selection of different Modes of Operation for Prediction
-    1 - Predict from CSV and output evaluation.conll
+    1 - Predict from CSV and output output.conll
     2 - Predict from Sample Sentence (sample.txt)
     """
     print("\n**************** Prediction Started ****************")
@@ -87,20 +78,21 @@ def predict(mode, filepath, modelpath, outputpath):
         # if mode == 1:
         #     command = "allennlp predict --output-file " + outputpath + " " + modelpath + " data/texts/formatted_data.txt"
         if mode == 1:
-             command = "allennlp predict --output-file " + outputpath + " " + modelpath + filepath
+             command = "allennlp predict --output-file " + outputpath + "prediction.txt " + modelpath + filepath
         # elif mode == 2:
         #     command = "allennlp predict --output-file " + outputpath + " " + modelpath + " data/texts/sample.txt"
 
         print("\n**************** Prediction Commencing ****************")
         os.system(command)
-        predictionCleanup(outputpath)
+        predictionCleanup(outputpath+'prediction.txt')
+        POSformat(outputpath+'prediction.conll')
         print("\n**************** Prediction Complete ****************")
     except:
         print("Something went wrong during prediction.")
         print("\n**************** Prediction Unsuccessful ****************")
 
 
-def csvToJSON(csvpath, formattedpath):
+def csvToJSON(csvpath, conversionOutputPath):
     """To covert raw data in CSV format to JSON sentences as input for prediction"""
     print("\n**************** Commencing Formatting ****************")
     # Converting CSV to formatted data
@@ -117,10 +109,10 @@ def csvToJSON(csvpath, formattedpath):
             s = s.strip()
             # add the sanitised s into formatted sentence string
             sentence = sentence + s
-    with open(formattedpath + '/formatted_data.txt', 'w', encoding='utf-8') as f:
+    with open(conversionOutputPath + '/formatted_data.txt', 'w', encoding='utf-8') as f:
         data_set = {"sentence": sentence}
         json.dump(data_set, f, ensure_ascii=False)
-    print("\nFile saved in \'" + formattedpath + "/formatted_data.txt\'")
+    print("\nFile saved in \'" + conversionOutputPath + "/formatted_data.txt\'")
     print("\n**************** Formatting Complete****************")
 
 
@@ -208,9 +200,9 @@ def predictionCleanup(predictionPath):
     tagList = tagList.sort_index()
 
     # Saving the new file as .conll format
-    tagList.to_csv(os.path.dirname(predictionPath) + '/evaluation.conll', header=None, index=None, sep=' ', mode='w')
+    tagList.to_csv(os.path.dirname(predictionPath) + '/prediction.conll', header=None, index=None, sep=' ', mode='w')
     whitespaceTaggingRemoval(predictionPath)
-    print("\nFile saved in  \'" + os.path.dirname(predictionPath) + '/evaluation.conll\'')
+    print("\nFile saved in  \'" + os.path.dirname(predictionPath) + '/prediction.conll\'')
     print("\n**************** Prediction Result Generated ****************")
 
 
@@ -420,11 +412,30 @@ def graphicalDisplay(resultPath):
 
 # ********** Main Functions **********
 def main() -> None:
-    if args.filepath: 
-        if args.predict: predict(args.filepath, args.predict, modelPath, outputPath)
+    if args.visual_graph: 
+        if args.filepath: graphicalDisplay(args.visual_graph)
         else: 
-            logging.error('specify file path name as pos argument')
+            logging.error('specify the path of the dataset for generation of knowledge graph with -f option')
             sys.exit(1)
-    if args.visual_graph: graphicalDisplay(args.visual_graph)
+    if args.conversion: 
+        if args.filepath: csvToJSON(args.conversion, conversionOutputPath)
+        else: 
+            logging.error('specify the path of the CSV file for conversion with -f option')
+            sys.exit(1)
+    if args.train: 
+        if args.config: train(args.train, modelPath, args.config)
+        else: 
+            logging.error('specify configuration file for training with -c option')
+            sys.exit(1)
+    if args.predict: 
+        if args.filepath: predict(args.filepath, args.predict, modelPath, outputPath)
+        else: 
+            logging.error('specify the path of the file for prediction with -f option')
+            sys.exit(1)
+    if args.dataset_check: 
+        if args.filepath: dataset_check(args.filepath)
+        else: 
+            logging.error('specify the path of the file for dataset check with -f option')
+            sys.exit(1)
 
 if __name__ == '__main__': main()
