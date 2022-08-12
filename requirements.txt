@@ -40,7 +40,7 @@ typing_extensions==4.2.0
 urllib3==1.26.9
 wasabi==0.9.1
 Werkzeug==2.1.2
-allennlp=2.9.3
+allennlp==2.9.3
 allennlp-models
 allennlp[all]
 cached-path==1.1.2

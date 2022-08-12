@@ -1,14 +1,35 @@
-import os
-import re
+import sys, os, re, json, spacy, dash, argparse, logging
 import pandas as pd
-import json
-import spacy
-import dash
 import dash_cytoscape as cyto
 from dash import html
 
-# ================ FUNCTION SECTION ================ #
+log = logging.getLogger("CybNER")
+    # filecheck(resultPath)
+    # csvToJSON(csvPath, formatPath)
+    # train(1, modelPath, configPath)
+    # predict(1, modelPath, outputPath)
+    # predictionCleanup(predictionPath)
+    # POSformat(resultPath)
+    # graphicalDisplay(2, resultPath)
 
+# ********** File Paths **********
+trainPath = "data/train/train.conll"
+validPath = "data/valid/valid.conll"
+csvPath = "data/texts/main_data.csv"
+formatPath = "data/texts"
+outputPath = "dataOutput/predictions/prediction"
+modelPath = "model/AllenNLP_model.tar.gz"
+configPath = "config.json"
+resultPath = "dataOutput/predictions/evaluation.conll-POS"
+predictionPath = outputPath
+
+parser = argparse.ArgumentParser(description='Usage of CybNER for cybersecurity-NER')
+parser.add_argument("-f", "--filepath", default=None, type=str, help="input the path of the dataset file")
+parser.add_argument("-p", "--predict", default=None, type=int, help="[PREDICTION] 1 - predict from CSV file, 2 - predict from TXT file | perform prediction on supplied raw text")
+parser.add_argument("-vg", "--visual_graph", default=None, type=str, help="input CoNLL dataset file path | generate knowledge graph based on CoNLL-2003 format")
+args = parser.parse_args()
+
+# ================ FUNCTION SECTION ================ #
 def filecheck(path):
     """ To check and pinpoint for any encoding errors in the dataset """
     print("\n**************** Filecheck Started ****************")
@@ -55,7 +76,7 @@ def train(mode, modelpath, config):
         print("\n**************** Training Unsuccessful ****************")
 
 
-def predict(mode, modelpath, outputpath):
+def predict(mode, filepath, modelpath, outputpath):
     """ Selection of different Modes of Operation for Prediction
     1 - Predict from CSV and output evaluation.conll
     2 - Predict from Sample Sentence (sample.txt)
@@ -63,18 +84,16 @@ def predict(mode, modelpath, outputpath):
     print("\n**************** Prediction Started ****************")
     try:
         command = ""
+        # if mode == 1:
+        #     command = "allennlp predict --output-file " + outputpath + " " + modelpath + " data/texts/formatted_data.txt"
         if mode == 1:
-            command = "allennlp predict --output-file " + outputpath + " " + modelpath + " data/texts/formatted_data" \
-                                                                                         ".txt "
-        elif mode == 2:
-            command = "allennlp predict --output-file " + outputpath + " " + modelpath + " data/texts/sample" \
-                                                                                         ".txt "
-        else:
-            print("Select a mode")
-            print("\n**************** Prediction Complete ****************")
-            exit(1)
+             command = "allennlp predict --output-file " + outputpath + " " + modelpath + filepath
+        # elif mode == 2:
+        #     command = "allennlp predict --output-file " + outputpath + " " + modelpath + " data/texts/sample.txt"
+
         print("\n**************** Prediction Commencing ****************")
         os.system(command)
+        predictionCleanup(outputpath)
         print("\n**************** Prediction Complete ****************")
     except:
         print("Something went wrong during prediction.")
@@ -290,24 +309,12 @@ def POSformat(resultPath):
     print("\n**************** Adding POS Tags Completed ****************")
 
 
-def graphicalDisplay(mode, resultPath):
+def graphicalDisplay(resultPath):
     """ Function used to display the plot chart used for presentation
-    Modes:
-    1 - evaluation output path
-    2 - Demo Chart
     """
-
-    if mode == 1:
-        file = resultPath
-    elif mode == 2:
-        file = "data/graph_dataset.txt"
-    else:
-        print("Select a mode")
-        exit(0)
-
     try:
         print("\n**************** Commencing Chart Generation ****************")
-        f1 = open(file, 'r')
+        f1 = open(resultPath, 'r')
         id_list = ['raw text']
         label_list = ['raw text']
         ner_tag_list = ['-']
@@ -411,30 +418,13 @@ def graphicalDisplay(mode, resultPath):
         print("\n**************** Chart Generation Stopped ****************")
         exit(0)
 
-
-# ================ END SECTION ================ #
-
-# ================ RUNNING SECTION ================ #
-
-# ********** File Paths **********
-trainPath = "data/train/train.conll"
-validPath = "data/valid/valid.conll"
-csvPath = "data/texts/main_data.csv"
-formatPath = "data/texts"
-outputPath = "dataOutput/predictions/prediction"
-modelPath = "modelOutput/model"
-configPath = "config.json"
-resultPath = "dataOutput/predictions/evaluation.conll-POS"
-predictionPath = outputPath
-
 # ********** Main Functions **********
-filecheck(resultPath)
-csvToJSON(csvPath, formatPath)
-train(1, modelPath, configPath)
-predict(1, modelPath, outputPath)
-predictionCleanup(predictionPath)
-POSformat(resultPath)
-graphicalDisplay(2, resultPath)
+def main() -> None:
+    if args.filepath: 
+        if args.predict: predict(args.filepath, args.predict, modelPath, outputPath)
+        else: 
+            logging.error('specify file path name as pos argument')
+            sys.exit(1)
+    if args.visual_graph: graphicalDisplay(args.visual_graph)
 
-
-# ================ END SECTION ================ #
+if __name__ == '__main__': main()
