@@ -26,9 +26,9 @@ python analyse.py -co -f "raw_text.csv"
 #The output will be example.conll-POS for this example.
 python analyse.py -pos -f "example.conll"
 
-#perform training on the AllenNLP model with the user specified configuration file named raw_text.json.
+#perform training on the AllenNLP model with the user specified configuration file named config.json.
 # mode = 1 - perform train and overwrite output directory
-python analyse.py -t 1 -c "raw_text.json"
+python analyse.py -t 1 -c "config.json"
 
 #perform prediction with the AllenNLP model by suppying a raw text file named raw_text.json.
 # prediction output will be save as prediction.txt
@@ -46,7 +46,7 @@ Command Options:
     -co         convert a CSV file to a JSON file format for predictions with the model.
     -pos        perform automated annotation of POS tag on user supplied dataset
     -f          inpu the path of the file/dataset required by visual graph, conversion, dataset_check or predict function.
-    -t          train the model with a customised config or with the same dataset | - t [1, 2, 3], 1 - train with force overwrite 2 - train with recovery 3 - help page on train cmd.
+    -t          train the model with a customised config or with the same dataset | - t [1, 2], 1 - train and overwrite the output directory 2 - train and recover from serialization directory.
     -c          input model configuration file to perform training of model.
     -p          perform prediction with the model with the supplied raw text provided by the user | -p [1, 2], 1 - predict from CSV file, 2 - predict from TXT file.
     -vg         generate a interactive web-based knowledge graph based on a dataset in CoNLL-2003 format.

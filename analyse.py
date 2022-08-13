@@ -8,7 +8,7 @@ log = logging.getLogger("CybNER")
 # ********** File Paths **********
 conversionOutputPath = "data/texts"
 outputPath = "dataOutput/predictions/"
-modelPath = "modelOutput/model"
+modelPath = "modelOutput/1"
 
 parser = argparse.ArgumentParser(description='CybNER - perform cybersecurity named entity recognition')
 parser.add_argument("-f", "--filepath", default=None, type=str, help="input the path of the file/dataset needed by visual graph, conversion, dataset_check or predict function")
@@ -43,9 +43,8 @@ def dataset_check(path):
 
 def train(mode, modelpath, config):
     """ Selection of different Modes of Operation for Prediction
-    1 - Train with force overwrite
-    2 - Train with Recover Model
-    3 - Allennlp train -h
+    1 - Train and force overwrite the model output directory
+    2 - Train and recover past serialization directory (retrain)
     """
     print("\n**************** Training Started ****************")
     try:
@@ -54,17 +53,15 @@ def train(mode, modelpath, config):
             command = "allennlp train -f -s " + modelpath + " " + config
         elif mode == 2:
             command = "allennlp train -s " + modelpath + " " + config + " --recover"
-        elif mode == 3:
-            command = "allennlp train -h"
         else:
             print("Select a mode")
             exit(1)
-            print("\n**************** Training Complete ****************")
         print("\n**************** Training Commencing ****************")
         os.system(command)
         print("\n**************** Training Complete ****************")
-    except:
+    except Exception as e:
         print("Something went wrong during training.")
+        print("error message: "+e)
         print("\n**************** Training Unsuccessful ****************")
 
 
@@ -74,15 +71,16 @@ def predict(filepath, modelpath, outputpath):
     """
     print("\n**************** Prediction Started ****************")
     try:
-        command = "allennlp predict --output-file " + outputpath + "prediction.txt " + modelpath + filepath
+        command = "allennlp predict --output-file " + outputpath + "prediction.txt " + modelpath + " " +filepath
 
         print("\n**************** Prediction Commencing ****************")
         os.system(command)
         predictionCleanup(outputpath+'prediction.txt')
         POSformat(outputpath+'prediction.conll')
         print("\n**************** Prediction Complete ****************")
-    except:
+    except Exception as e:
         print("Something went wrong during prediction.")
+        print("error message: "+e)
         print("\n**************** Prediction Unsuccessful ****************")
 
 
@@ -103,10 +101,10 @@ def csvToJSON(csvpath, conversionOutputPath):
             s = s.strip()
             # add the sanitised s into formatted sentence string
             sentence = sentence + s
-    with open(conversionOutputPath + '/formatted_data.txt', 'w', encoding='utf-8') as f:
+    with open(conversionOutputPath + '/formatted_data.json', 'w', encoding='utf-8') as f:
         data_set = {"sentence": sentence}
         json.dump(data_set, f, ensure_ascii=False)
-    print("\nFile saved in \'" + conversionOutputPath + "/formatted_data.txt\'")
+    print("\nFile saved in \'" + conversionOutputPath + "/formatted_data.json\'")
     print("\n**************** Formatting Complete****************")
 
 
@@ -149,7 +147,7 @@ def tagCleanup(resultPath):
 
 def whitespaceTaggingRemoval(resultPath):
     """To remove inaccurate predictions of whitespaces"""
-    with open(os.path.dirname(resultPath) + '/evaluation.conll', 'r') as file:
+    with open(os.path.dirname(resultPath) + '/prediction.conll', 'r') as file:
         filedata = file.read()
 
     # Remove all whitespace: Data clean up manually
@@ -167,7 +165,7 @@ def whitespaceTaggingRemoval(resultPath):
     filedata = filedata.replace('\n -X- I-O U-APT', '\n')
     filedata = filedata.replace('\n -X- I-O U-CYBERSEC', '\n')
 
-    with open(os.path.dirname(resultPath) + '/evaluation.conll', 'w') as file:
+    with open(os.path.dirname(resultPath) + '/prediction.conll', 'w') as file:
         file.write(filedata)
 
 
@@ -399,10 +397,11 @@ def graphicalDisplay(resultPath):
 
         app.run_server(debug=True)
         print("\n**************** Chart Generation Complete ****************")
-    except:
+    except Exception as e:
         print("Unable to display chart. Something went wrong")
+        print("error message: "+e)
         print("\n**************** Chart Generation Stopped ****************")
-        exit(0)
+        sys.exit(1)
 
 # ********** Main Functions **********
 def main() -> None:
@@ -412,12 +411,12 @@ def main() -> None:
             logging.error('specify the path of the file for dataset check with -f option')
             sys.exit(1)
     if args.conversion: 
-        if args.filepath: csvToJSON(args.conversion, conversionOutputPath)
+        if args.filepath: csvToJSON(args.filepath, conversionOutputPath)
         else: 
             logging.error('specify the path of the CSV file for conversion with -f option')
             sys.exit(1)
     if args.pos_format: 
-        if args.filepath: POSformat(args.pos_format)
+        if args.filepath: POSformat(args.filepath)
         else: 
             logging.error('specify the path of the dataset to append POS tag with -f option')
             sys.exit(1)
