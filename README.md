@@ -1,7 +1,7 @@
 
 # Cybersecurity Named Entity Recognition
 ## Introduction
-A AllenNLP Model trained for Named Entity Recognition in the Cybersecurity Domain with added features of automated annotation and visualization graph.
+CybNER is a command-line tool that aids in the usage of the trained AllenNLP model that is developed by the team for Named Entity Recognition (NER) in the Cybersecurity Domain. CybNER provides extensive features which includes dataset encoding error checks, CSV - JSON raw text conversion, training and prediction of model, automation annotation and generation of interactive web-based knowledge graph.
 ## Requirements
 - Python3
 ## Installation and Setup 
