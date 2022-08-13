@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser(description='CybNER - perform cybersecurity nam
 parser.add_argument("-f", "--filepath", default=None, type=str, help="input the path of the file/dataset needed by visual graph, conversion, dataset_check or predict function")
 parser.add_argument("-t", "--train", default=None, type=int, help="[TRAIN] 1 - train with force overwrite 2 - train with recovery 3 - help page on train cmd | retrain the model with customised config or with the same dataset")
 parser.add_argument("-c", "--config", default=None, type=str, help="input configuration file for training")
-parser.add_argument("-p", "--predict", default=None, type=int, help="[PREDICTION] 1 - predict from CSV file, 2 - predict from TXT file | perform prediction on supplied raw text")
+parser.add_argument("-p", "--predict", action='store_true', help="perform prediction on supplied raw text")
 parser.add_argument("-vg", "--visual_graph", action='store_true', help="generate a interactive knowledge graph based on CoNLL-2003 format")
 parser.add_argument("-co", "--conversion", action='store_true', help="convert CSV file to JSON format for prediction")
 parser.add_argument("-dc", "--dataset_check", action='store_true', help="check for encoding errors in datasets")
@@ -44,7 +44,7 @@ def train(mode, modelpath, config):
     """ Selection of different Modes of Operation for Prediction
     1 - Train with force overwrite
     2 - Train with Recover Model
-    3 - Allennlp Train -h
+    3 - Allennlp train -h
     """
     print("\n**************** Training Started ****************")
     try:
@@ -67,20 +67,13 @@ def train(mode, modelpath, config):
         print("\n**************** Training Unsuccessful ****************")
 
 
-def predict(mode, filepath, modelpath, outputpath):
+def predict(filepath, modelpath, outputpath):
     """ Selection of different Modes of Operation for Prediction
-    1 - Predict from CSV and output output.conll
-    2 - Predict from Sample Sentence (sample.txt)
+    Predict from JSON and output prediction.txt -> predictionCleanup function --> prediction.conll -> POSformat function --> prediction.conll
     """
     print("\n**************** Prediction Started ****************")
     try:
-        command = ""
-        # if mode == 1:
-        #     command = "allennlp predict --output-file " + outputpath + " " + modelpath + " data/texts/formatted_data.txt"
-        if mode == 1:
-             command = "allennlp predict --output-file " + outputpath + "prediction.txt " + modelpath + filepath
-        # elif mode == 2:
-        #     command = "allennlp predict --output-file " + outputpath + " " + modelpath + " data/texts/sample.txt"
+        command = "allennlp predict --output-file " + outputpath + "prediction.txt " + modelpath + filepath
 
         print("\n**************** Prediction Commencing ****************")
         os.system(command)
@@ -428,7 +421,7 @@ def main() -> None:
             logging.error('specify configuration file for training with -c option')
             sys.exit(1)
     if args.predict: 
-        if args.filepath: predict(args.filepath, args.predict, modelPath, outputPath)
+        if args.filepath: predict(args.filepath, modelPath, outputPath)
         else: 
             logging.error('specify the path of the file for prediction with -f option')
             sys.exit(1)

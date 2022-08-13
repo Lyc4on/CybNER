@@ -27,7 +27,7 @@ python analyse.py -t 1 -c "raw_text.json"
 python analyse.py -co -f "raw_text.csv"
 
 #perform prediction with the AllenNLP model by suppying a raw text file named raw_text.json.
-python analyse.py -p <mode> -f "raw_text.json"
+python analyse.py -p -f "raw_text.json"
 
 #generate a interactive web based knowledge graph with the user specified dataset file named example.conll.
 python analyse.py -vg -f "example.conll"
