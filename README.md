@@ -46,10 +46,7 @@ Options:
 ```
 
 ## Visualization Graph 
- A interactive knowledge graph can be generated with the use of dash cytoscape and python flask libraries, for a better visualization of cybersecurity terms identified from a raw txt file in CoNLL-2003 format.
- ```bash
-python main.py -p <csv file>
-```
+ A interactive knowledge graph can be generated with the use of dash cytoscape and python flask libraries, for a better visualization of cybersecurity terms identified from a raw txt file in CoNLL-2003 format. A example of the interactive knowledge graph based on a small dataset are as shown below:
 
 ![](images/Knowledge_Graph.png)
 

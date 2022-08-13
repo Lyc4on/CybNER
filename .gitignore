@@ -1,7 +1,7 @@
 # Ignore all model folder 
 modelOutput/*
 
-config.json
+./config.json
 
 data/train/*
 
