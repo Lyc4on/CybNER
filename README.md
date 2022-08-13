@@ -1,7 +1,7 @@
 
 # Cybersecurity Named Entity Recognition
 ## Introduction
-CybNER is a command-line tool that aids in the usage of the trained AllenNLP model that is developed by the team for Named Entity Recognition (NER) in the Cybersecurity Domain. CybNER provides extensive features which includes dataset encoding error checks, CSV - JSON raw text conversion, training and prediction of model, automation annotation and generation of interactive web-based knowledge graph.
+CybNER is a command-line tool that aids in the usage of the trained AllenNLP model that is developed by the team for Named Entity Recognition (NER) in the Cybersecurity Domain. CybNER provides extensive features which includes dataset encoding error checks, CSV - JSON raw text conversion, training and prediction of model, automation annotation on POS tag or Named Entity tag and generation of interactive web-based knowledge graph.
 ## Requirements
 - Python3
 ## Installation and Setup 
@@ -15,18 +15,24 @@ The diagram below depicts the overall architecture of the system, beginning from
 ![](images/Project_Architecture.png)
 
 ## Usage
-```bash
+```
 # perform checks for encoding errors on a user specified dataset in CoNLL-2003 format, example.conll.
 python analyse.py -dc -f "example.conll"
+
+#perform conversion of user specified raw text file, named raw_text.csv to JSON format for prediction purpose.
+python analyse.py -co -f "raw_text.csv"
+
+#perform automated annotation of POS tag on a user specified dataset in CoNLL-2003 format.
+#The output will be example.conll-POS for this example.
+python analyse.py -pos -f "example.conll"
 
 #perform training on the AllenNLP model with the user specified configuration file named raw_text.json.
 # mode = 1 - perform train and overwrite output directory
 python analyse.py -t 1 -c "raw_text.json"
 
-#perform conversion of user specified raw text file, named raw_text.csv to JSON format for prediction purpose.
-python analyse.py -co -f "raw_text.csv"
-
 #perform prediction with the AllenNLP model by suppying a raw text file named raw_text.json.
+# prediction output will be save as prediction.txt
+# Automated annotation is achieved by converting prediction.txt to prediction.conll
 python analyse.py -p -f "raw_text.json"
 
 #generate a interactive web based knowledge graph with the user specified dataset file named example.conll.
@@ -35,14 +41,15 @@ python analyse.py -vg -f "example.conll"
 ```
 
 ```
-Options:
+Command Options:
+    -dc         perform checks for encoding errors on user supplied dataset.
+    -co         convert a CSV file to a JSON file format for predictions with the model.
+    -pos        perform automated annotation of POS tag on user supplied dataset
     -f          inpu the path of the file/dataset required by visual graph, conversion, dataset_check or predict function.
     -t          train the model with a customised config or with the same dataset | - t [1, 2, 3], 1 - train with force overwrite 2 - train with recovery 3 - help page on train cmd.
     -c          input model configuration file to perform training of model.
     -p          perform prediction with the model with the supplied raw text provided by the user | -p [1, 2], 1 - predict from CSV file, 2 - predict from TXT file.
     -vg         generate a interactive web-based knowledge graph based on a dataset in CoNLL-2003 format.
-    -co         convert a CSV file to a JSON file format for predictions with the model.
-    -dc         perform checks for encoding errors on user supplied dataset.
 ```
 
 ## Visualization Graph 

@@ -12,12 +12,13 @@ modelPath = "modelOutput/model"
 
 parser = argparse.ArgumentParser(description='CybNER - perform cybersecurity named entity recognition')
 parser.add_argument("-f", "--filepath", default=None, type=str, help="input the path of the file/dataset needed by visual graph, conversion, dataset_check or predict function")
+parser.add_argument("-dc", "--dataset_check", action='store_true', help="check for encoding errors in datasets")
+parser.add_argument("-co", "--conversion", action='store_true', help="convert CSV file to JSON format for prediction")
+parser.add_argument("-pos", "--pos_format", action='store_true', help="append POS tag to CoNLL-2003 dataset file")
 parser.add_argument("-t", "--train", default=None, type=int, help="[TRAIN] 1 - train with force overwrite 2 - train with recovery 3 - help page on train cmd | retrain the model with customised config or with the same dataset")
 parser.add_argument("-c", "--config", default=None, type=str, help="input configuration file for training")
 parser.add_argument("-p", "--predict", action='store_true', help="perform prediction on supplied raw text")
 parser.add_argument("-vg", "--visual_graph", action='store_true', help="generate a interactive knowledge graph based on CoNLL-2003 format")
-parser.add_argument("-co", "--conversion", action='store_true', help="convert CSV file to JSON format for prediction")
-parser.add_argument("-dc", "--dataset_check", action='store_true', help="check for encoding errors in datasets")
 args = parser.parse_args()
 
 # ================ FUNCTION SECTION ================ #
@@ -405,15 +406,20 @@ def graphicalDisplay(resultPath):
 
 # ********** Main Functions **********
 def main() -> None:
-    if args.visual_graph: 
-        if args.filepath: graphicalDisplay(args.visual_graph)
+    if args.dataset_check: 
+        if args.filepath: dataset_check(args.filepath)
         else: 
-            logging.error('specify the path of the dataset for generation of knowledge graph with -f option')
+            logging.error('specify the path of the file for dataset check with -f option')
             sys.exit(1)
     if args.conversion: 
         if args.filepath: csvToJSON(args.conversion, conversionOutputPath)
         else: 
             logging.error('specify the path of the CSV file for conversion with -f option')
+            sys.exit(1)
+    if args.pos_format: 
+        if args.filepath: POSformat(args.pos_format)
+        else: 
+            logging.error('specify the path of the dataset to append POS tag with -f option')
             sys.exit(1)
     if args.train: 
         if args.config: train(args.train, modelPath, args.config)
@@ -425,10 +431,10 @@ def main() -> None:
         else: 
             logging.error('specify the path of the file for prediction with -f option')
             sys.exit(1)
-    if args.dataset_check: 
-        if args.filepath: dataset_check(args.filepath)
+    if args.visual_graph: 
+        if args.filepath: graphicalDisplay(args.visual_graph)
         else: 
-            logging.error('specify the path of the file for dataset check with -f option')
+            logging.error('specify the path of the dataset for generation of knowledge graph with -f option')
             sys.exit(1)
 
 if __name__ == '__main__': main()
