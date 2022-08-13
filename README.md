@@ -15,7 +15,7 @@ The diagram below depicts the overall architecture of the system, beginning from
 ![](images/Project_Architecture.png)
 
 ## Usage
-```
+```bash
 # perform checks for encoding errors on a user specified dataset in CoNLL-2003 format, example.conll.
 python analyse.py -dc -f "example.conll"
 
