@@ -40,7 +40,7 @@ python analyse.py -vg -f "example.conll"
 
 ```
 
-```bash
+```
 Command Options:
     -dc         perform checks for encoding errors on user supplied dataset.
     -co         convert a CSV file to a JSON file format for predictions with the model.
