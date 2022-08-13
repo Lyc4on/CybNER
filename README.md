@@ -5,17 +5,13 @@ A AllenNLP Model trained for Named Entity Recognition in the Cybersecurity Domai
 
 ## Requirements
 - Python3
-- Anaconda 
 
 ## Installation and Setup 
 1. Download Anaconda from **https://www.anaconda.com/products/distribution**
 
  ```bash
-conda create -n conda_env python=3.9
-conda activate conda_env
 git clone https://github.com/Lyc4on/Cybersecurity-NER.git
 pip install -r requirements.txt
-conda install -c anaconda cudatoolkit
 ```
 
 ## System Architecture
@@ -26,7 +22,14 @@ The diagram below depicts the overall architecture of the system, beginning from
 
 ## Usage
  ```bash
-python main.py -p <csv file>
+python analyse.py -p <mode> -f <json file>
+
+python analyse.py -vg -f <conll dataset file>
+
+python analyse.py -co -f <csv file>
+
+python analyse.py
+
 ```
 
 ## Visualization Graph 
