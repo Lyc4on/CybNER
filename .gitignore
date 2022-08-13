@@ -1,2 +1,8 @@
 # Ignore all model folder 
 modelOutput/*
+
+config.json
+
+data/train/*
+
+data/valid/*
