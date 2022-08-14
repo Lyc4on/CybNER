@@ -8,7 +8,7 @@ log = logging.getLogger("CybNER")
 # ********** File Paths **********
 conversionOutputPath = "data/texts"
 outputPath = "dataOutput/predictions/"
-modelPath = "modelOutput/1"
+modelPath = "modelOutput/model"
 
 parser = argparse.ArgumentParser(description='CybNER - perform cybersecurity named entity recognition')
 parser.add_argument("-f", "--filepath", default=None, type=str, help="input the path of the file/dataset needed by visual graph, conversion, dataset_check or predict function")

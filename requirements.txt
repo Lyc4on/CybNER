@@ -28,7 +28,9 @@ CherryPy==18.8.0
 click==8.0.4
 conllu==4.4.1
 cryptography==37.0.4
+cuda-python==11.7.1
 cymem==2.0.6
+Cython==0.29.32
 dash==2.6.0
 dash-core-components==2.0.0
 dash-cytoscape==0.3.0
