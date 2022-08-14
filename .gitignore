@@ -1,9 +1,6 @@
 # Ignore all model folder 
 modelOutput/*
-config.json
 data/train/*
 data/valid/*
-data/texts/main_data.csv
-data/texts/formatted_data.txt
 visual_graph_script.py
 pos_script.py
