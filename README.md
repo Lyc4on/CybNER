@@ -57,5 +57,5 @@ Command Options:
 ![](images/Knowledge_Graph.png)
 
 ## Releases
-The release section consists of the trained AllenNLP model at https://github.com/Lyc4on/Cybersecurity-NER/releases/download/v1.0.0/AllenNLP_model.tar.gz
+The release section consists of the trained AllenNLP model at https://github.com/Lyc4on/CybNER/releases/tag/v1.0.0
 
