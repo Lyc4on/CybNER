@@ -5,7 +5,7 @@ CybNER is a command-line tool that aids in using the trained AllenNLP model deve
 - Python3
 ## Installation and Setup 
  ```bash
-git clone https://github.com/Lyc4on/Cybersecurity-NER.git
+git clone https://github.com/Lyc4on/CybNER.git
 pip install -r requirements.txt
 ```
 ## System Architecture
