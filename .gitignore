@@ -1,5 +1,5 @@
 # Ignore all model folder 
-modelOutput/*
+modelOutput/model
 data/train/*
 data/valid/*
 visual_graph_script.py
